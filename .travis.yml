@@ -3,10 +3,10 @@ services:
   - docker
 
 before_install:
-  - docker build -t vokrobodo/react-test -f ./client/Dockerfile.dev ./client
+  - docker build -t veeokrobodo/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run -e CI=true vokrobodo/react-test npm test -- --coverage
+  - docker run -e CI=true veeokrobodo/react-test npm test -- --coverage
 
 after_success:
   - docker build -t vokrobodo/multi-client ./client
@@ -16,7 +16,7 @@ after_success:
   # Login to the docker cli
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take images and push to dockerhub
-  - docker build vokrobodo/multi-client
-  - docker build vokrobodo/multi-nginx
-  - docker build vokrobodo/multi-server
-  - docker build vokrobodo/multi-worker
+  - docker push vokrobodo/multi-client
+  - docker push vokrobodo/multi-nginx
+  - docker push vokrobodo/multi-server
+  - docker push vokrobodo/multi-worker
